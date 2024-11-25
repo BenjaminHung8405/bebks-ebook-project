@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Color(0xFF14161B),
         useMaterial3: true,
         ),
-      home: LoginPage(),
+      home: StartPage(),
     );
   }
 }
