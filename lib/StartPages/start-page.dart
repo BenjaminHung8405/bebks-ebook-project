@@ -1,6 +1,7 @@
 // import 'package:bebks_ebooks/Library/library-page.dart';
 import 'package:bebks_ebooks/StartPages/login-page.dart';
 import 'package:flutter/material.dart';
+import 'package:bebks_ebooks/models/colorModel.dart';
 
 class StartPage extends StatelessWidget {
   const StartPage({super.key});
@@ -8,7 +9,7 @@ class StartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF14161B),
+      backgroundColor: ColorModel.primaryColor,
       body: Column(
         children: [
           Padding(
@@ -23,7 +24,7 @@ class StartPage extends StatelessWidget {
               textAlign: TextAlign.center,
               'Đọc sách cùng BEBKs',
               style: TextStyle(
-                  color: Colors.white,
+                  color: ColorModel.textColor,
                   fontSize: 36,
                   fontWeight: FontWeight.w700,
                   height: 1.3
@@ -36,7 +37,7 @@ class StartPage extends StatelessWidget {
               textAlign: TextAlign.center,
               'Đọc sách rất quan trọng. Nếu biết cách đọc cả thế giới sẽ mở ra với bạn',
               style: TextStyle(
-                  color: Color(0xff83899f),
+                  color: ColorModel.lightTextColor,
                   fontSize: 20,
                   fontWeight: FontWeight.w400
               ),
@@ -47,18 +48,18 @@ class StartPage extends StatelessWidget {
             label: Text(
               'Cùng bắt đầu nào',
               style: TextStyle(
-                  color: Colors.white,
+                  color: ColorModel.primaryColor,
                   fontSize: 23,
                   fontWeight: FontWeight.w600
               ),
             ),
             icon: Icon(
               Icons.book,
-              color: Colors.white,
+              color: ColorModel.primaryColor,
             ),
             style: ElevatedButton.styleFrom(
                 minimumSize: Size(330, 48),
-                backgroundColor: Color(0xFF8C31FF),
+                backgroundColor: ColorModel.secondaryColor,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12)
                 )

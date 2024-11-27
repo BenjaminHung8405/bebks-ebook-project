@@ -4,6 +4,7 @@ import 'package:bebks_ebooks/StartPages/login-page.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:bebks_ebooks/models/environment.dart';
+import 'package:bebks_ebooks/models/colorModel.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -60,21 +61,22 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorModel.primaryColor,
       appBar: AppBar(
-        backgroundColor: Color(0xFF14161B),
-        foregroundColor: Colors.white,
+        backgroundColor: ColorModel.primaryColor,
+        foregroundColor: ColorModel.textColor,
         ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               const SizedBox(height: 30),
               Text(
                 'Tạo tài khoản của bạn',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: ColorModel.textColor,
                   fontSize: 30,
                   fontWeight: FontWeight.w700
                   ),
@@ -103,17 +105,17 @@ class _RegisterPageState extends State<RegisterPage> {
               ElevatedButton(
                 onPressed: registerUser,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF8C31FF),
+                  backgroundColor: ColorModel.secondaryColor,
                   minimumSize: const Size(double.infinity, 48),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
                 ), 
                 child: _isLoading
-                ? const CircularProgressIndicator(color: Colors.white, strokeWidth: 2)
-                : const Text(
+                ? CircularProgressIndicator(color: ColorModel.secondaryColor, strokeWidth: 2)
+                : Text(
                     'Đăng ký',
                     style: TextStyle(
                         fontSize: 25,
-                        color: Colors.white,
+                        color: ColorModel.primaryColor,
                         fontWeight: FontWeight.w700),
                   ),
             ),
@@ -136,13 +138,13 @@ class _RegisterPageState extends State<RegisterPage> {
     return TextField(
       controller: controller,
       obscureText: isPassword && _isObscure,
-      style: const TextStyle(
-          color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500),
+      style: TextStyle(
+          color: ColorModel.textColor, fontSize: 18, fontWeight: FontWeight.w500),
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 0),
         hintText: hintText,
-        hintStyle: const TextStyle(
-            color: Color(0xff83899f),
+        hintStyle: TextStyle(
+            color: ColorModel.lightTextColor,
             fontSize: 16,
             fontWeight: FontWeight.w400),
         prefixIcon: Icon(prefixIcon, size: 20),
@@ -154,15 +156,15 @@ class _RegisterPageState extends State<RegisterPage> {
               )
             : null,
         border: OutlineInputBorder(
-          borderSide: BorderSide(color: Color(0xFFD0DBEA), width: 1.0),
+          borderSide: BorderSide(color: ColorModel.borderColor, width: 1.0),
           borderRadius: BorderRadius.circular(18)
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Color(0xFF8C31FF), width: 2.0),
+          borderSide: BorderSide(color: ColorModel.secondaryColor, width: 2.0),
           borderRadius: BorderRadius.circular(18)
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Color(0xFFD0DBEA), width: 1.0),
+          borderSide: BorderSide(color: ColorModel.borderColor, width: 1.0),
           borderRadius: BorderRadius.circular(18)
         ),
       ),
@@ -173,18 +175,18 @@ class _RegisterPageState extends State<RegisterPage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text(
+        Text(
           'Đã có tài khoản?',
-          style: TextStyle(fontSize: 18, color: Color(0xFF9FA5C0)),
+          style: TextStyle(fontSize: 18, color: ColorModel.lightTextColor),
         ),
         TextButton(
           onPressed: () {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const LoginPage()));
           },
-          child: const Text(
+          child: Text(
             'Đăng nhập',
-            style: TextStyle(fontSize: 18, color: Color(0xFF8C31FF)),
+            style: TextStyle(fontSize: 18, color: ColorModel.secondaryColor),
           ),
         )
       ],

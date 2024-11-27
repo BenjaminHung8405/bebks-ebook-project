@@ -1,7 +1,9 @@
-import 'package:bebks_ebooks/StartPages/login-page.dart';
+import 'package:bebks_ebooks/Library/library-page.dart';
 import 'package:flutter/material.dart';
 import 'package:bebks_ebooks/StartPages/start-page.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';  
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:shared_preferences/shared_preferences.dart';  
 
 Future main() async {
   // To load the .env file contents into dotenv.
@@ -13,11 +15,21 @@ Future main() async {
     throw Exception('Error loading .env file: $e');
   }
   
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+
+  final token = prefs.getString('token');
+  bool isTokenValid = token != null && token.isNotEmpty && !JwtDecoder.isExpired(token);
+
+  runApp(MyApp(token: isTokenValid ? token : '',));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final token;
+  const MyApp({
+    @required this.token,
+    Key? key
+  }) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -30,7 +42,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Color(0xFF14161B),
         useMaterial3: true,
         ),
-      home: StartPage(),
+      home: (token.isNotEmpty && !JwtDecoder.isExpired(token)) ? LibraryPage(token: token) : StartPage(),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:bebks_ebooks/Library/library-page.dart';
 import 'package:bebks_ebooks/StartPages/register-page.dart';
+import 'package:bebks_ebooks/models/colorModel.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:bebks_ebooks/models/environment.dart';
@@ -52,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
       if(jsonResponse['status']){
           final myToken = jsonResponse['token'];
           prefs.setString('token', myToken);
-          Navigator.push(context, MaterialPageRoute(builder: (context) => LibraryPage(token: myToken),));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => LibraryPage(token: myToken)));
       }else{
         print('Something went wrong');
       }
@@ -83,7 +84,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: const Color(0xFF14161B),
+      backgroundColor: ColorModel.primaryColor,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -91,20 +92,20 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const SizedBox(height: 16),
-              const Text(
+              Text(
                 'Chào mừng trở lại!',
                 style: TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 27,
-                  color: Colors.white,
+                  color: ColorModel.textColor,
                 ),
               ),
-              const Text(
+              Text(
                 'Đăng nhập để tiếp tục.',
                 style: TextStyle(
                   fontWeight: FontWeight.w400,
                   fontSize: 18,
-                  color: Color(0xff83899f),
+                  color: ColorModel.lightTextColor,
                 ),
               ),
               const SizedBox(height: 40),
@@ -125,10 +126,10 @@ class _LoginPageState extends State<LoginPage> {
                 alignment: Alignment.centerRight,
                 child: GestureDetector(
                   onTap: () {},
-                  child: const Text(
+                  child: Text(
                     'Quên mật khẩu?',
                     style: TextStyle(
-                      color: Color(0xFF8C31FF),
+                      color: ColorModel.secondaryColor,
                       fontSize: 15,
                       fontWeight: FontWeight.w400,
                     ),
@@ -138,12 +139,12 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 20),
               _buildLoginButton(),
               const SizedBox(height: 16),
-              const Text(
+              Text(
                 'Hoặc đăng nhập bằng',
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 18,
-                  color: Color(0xFF9FA5C0),
+                  color: ColorModel.lightTextColor,
                 ),
               ),
               const SizedBox(height: 16),
@@ -166,13 +167,13 @@ class _LoginPageState extends State<LoginPage> {
     return TextField(
       controller: controller,
       obscureText: isPassword && _isObscure,
-      style: const TextStyle(
-          color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500),
+      style: TextStyle(
+          color: ColorModel.textColor, fontSize: 18, fontWeight: FontWeight.w500),
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 0),
         hintText: hintText,
-        hintStyle: const TextStyle(
-            color: Color(0xff83899f),
+        hintStyle: TextStyle(
+            color: ColorModel.lightTextColor,
             fontSize: 16,
             fontWeight: FontWeight.w400),
         prefixIcon: Icon(prefixIcon, size: 20),
@@ -184,15 +185,15 @@ class _LoginPageState extends State<LoginPage> {
               )
             : null,
         border: OutlineInputBorder(
-          borderSide: BorderSide(color: Color(0xFFD0DBEA), width: 1.0),
+          borderSide: BorderSide(color: ColorModel.borderColor, width: 1.0),
           borderRadius: BorderRadius.circular(18)
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Color(0xFF8C31FF), width: 2.0),
+          borderSide: BorderSide(color: ColorModel.secondaryColor, width: 2.0),
           borderRadius: BorderRadius.circular(18)
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Color(0xFFD0DBEA), width: 1.0),
+          borderSide: BorderSide(color: ColorModel.borderColor, width: 1.0),
           borderRadius: BorderRadius.circular(18)
         ),
       ),
@@ -203,17 +204,17 @@ class _LoginPageState extends State<LoginPage> {
     return ElevatedButton(
       onPressed: loginUser,
       style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xFF8C31FF),
+        backgroundColor: ColorModel.secondaryColor,
         minimumSize: const Size(double.infinity, 48),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
       ),
       child: _isLoading
-          ? const CircularProgressIndicator(color: Colors.white, strokeWidth: 2)
-          : const Text(
+          ? CircularProgressIndicator(color: ColorModel.primaryColor, strokeWidth: 2)
+          : Text(
               'Đăng nhập',
               style: TextStyle(
                   fontSize: 25,
-                  color: Colors.white,
+                  color: ColorModel.primaryColor,
                   fontWeight: FontWeight.w700),
             ),
     );
@@ -237,11 +238,11 @@ class _LoginPageState extends State<LoginPage> {
         child: ElevatedButton(
           onPressed: () {},
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.white,
+            backgroundColor: ColorModel.primaryColor,
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
-              side: BorderSide(color: Colors.grey.shade300),
+              side: BorderSide(color: ColorModel.textColor),
             ),
           ),
           child: Row(
@@ -251,10 +252,10 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(width: 8),
               Text(
                 text,
-                style: const TextStyle(
+                style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 16,
-                  color: Colors.black87,
+                  color: ColorModel.textColor,
                 ),
               ),
             ],
@@ -268,18 +269,18 @@ class _LoginPageState extends State<LoginPage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text(
+        Text(
           'Chưa có tài khoản?',
-          style: TextStyle(fontSize: 18, color: Color(0xFF9FA5C0)),
+          style: TextStyle(fontSize: 18, color: ColorModel.lightTextColor),
         ),
         TextButton(
           onPressed: () {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const RegisterPage()));
           },
-          child: const Text(
+          child: Text(
             'Đăng ký',
-            style: TextStyle(fontSize: 18, color: Color(0xFF8C31FF)),
+            style: TextStyle(fontSize: 18, color: ColorModel.secondaryColor),
           ),
         )
       ],
