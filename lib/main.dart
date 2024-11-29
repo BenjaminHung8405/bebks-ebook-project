@@ -1,8 +1,10 @@
+import 'package:bebks_ebooks/pages/StartPages/start_page.dart';
+import 'package:bebks_ebooks/pages/library_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';  
-import 'config/route.dart';
+import 'config/routers.dart';
 
 Future main() async {
   // To load the .env file contents into dotenv.
@@ -26,15 +28,14 @@ Future main() async {
 class MyApp extends StatelessWidget {
   final token;
   const MyApp({
-    @required this.token,
+    required this.token,
     Key? key
   }) : super(key: key);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final router = createRouter(token);
-    return MaterialApp.router(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: 'SF-Pro',
@@ -42,10 +43,9 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Color(0xFF14161B),
         useMaterial3: true,
         ),
-      // routerConfig: router,
-      routerDelegate: router.routerDelegate,
-      routeInformationParser: router.routeInformationParser,
-      routeInformationProvider: router.routeInformationProvider,
+      initialRoute: (token.isNotEmpty && !JwtDecoder.isExpired(token)) ? '/library' : '/',
+      onGenerateRoute: generateRoute,
+      routes: routes,
       // home: (token.isNotEmpty && !JwtDecoder.isExpired(token)) ? LibraryPage(token: token) : StartPage(),
     );
   }

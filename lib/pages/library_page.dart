@@ -8,7 +8,6 @@ import 'package:bebks_ebooks/widgets/searchBar.dart';
 import 'package:bebks_ebooks/widgets/RoundedImage.dart';
 import 'package:bebks_ebooks/widgets/title.dart';
 import 'package:bebks_ebooks/models/colorModel.dart';
-import 'package:go_router/go_router.dart';
 
 class LibraryPage extends StatefulWidget {
   final token;
@@ -47,24 +46,6 @@ class _LibraryPageState extends State<LibraryPage> {
             snap: true,
             centerTitle: true,
             title: titleWidget(title: 'BEBKs', size: 25, padding: 0,),
-            leading: GestureDetector(
-              onTap: () {
-                
-              },
-              child: Container(
-                margin: EdgeInsets.all(10),
-                alignment: Alignment.center,
-                width: 37,
-                child: Icon(
-                  Icons.arrow_back_ios_rounded,
-                  size: 30,
-                  ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.transparent
-                ),
-              ),
-            )
           )],
           body: ListView(
             padding: EdgeInsets.only(left: 20,right: 20),
@@ -96,7 +77,7 @@ class _LibraryPageState extends State<LibraryPage> {
                       crossAxisCount: 2,
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 15,
-                      childAspectRatio: 0.57
+                      childAspectRatio: 0.68
                       ),
                     physics: ClampingScrollPhysics(),
                     padding: EdgeInsets.symmetric(horizontal: 10),
@@ -106,34 +87,36 @@ class _LibraryPageState extends State<LibraryPage> {
                       final book = books[index];
                       return GestureDetector(
                         onTap: () async {
-                          context.go('/read/${book.id}');
+                          Navigator.pushNamed(context, '/book/${book.id}');
                         },
                         child: Container(
-                          padding: EdgeInsets.all(10),
-                          height: 240,
+                          padding: EdgeInsets.symmetric(horizontal: 20,vertical: 15),
+                          height: 120,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: Image.network(
-                                  book.coverImage,
-                                  scale: 1,
-                                  errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) { 
-                                    return Text('Image not found. Please try a different URL.');
-                                  },
-                                  ),
+                              SizedBox(
+                                height: 250,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Image.network(
+                                    book.coverImage,
+                                    scale: 1,
+                                    errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) { 
+                                      return Text('Image not found. Please try a different URL.');
+                                    },
+                                    ),
+                                ),
                               ),
                               const SizedBox(height: 10,),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  titleWidget(
-                                    title: book.title,
-                                    padding: 20,
-                                    size: (book.title.length > 17)? 16 : 18,
-                                    )
-                                ],
+                              Text(
+                                book.title,
+                                style: TextStyle(
+                                  color:  ColorModel.textColor,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600
+                                ),
+                                overflow: TextOverflow.ellipsis,
                               )
                             ],
                           ),

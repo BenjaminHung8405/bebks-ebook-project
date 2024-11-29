@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:bebks_ebooks/StartPages/login_page.dart';
+import 'package:bebks_ebooks/pages/StartPages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:bebks_ebooks/models/environment.dart';
@@ -43,7 +43,7 @@ class _RegisterPageState extends State<RegisterPage> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Đăng ký thành công!')),
         );
-        Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage(),));
+        Navigator.pushNamed(context, '/login');
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Lỗi: ${response.body}')),

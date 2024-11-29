@@ -1,5 +1,5 @@
 import 'package:bebks_ebooks/pages/library_page.dart';
-import 'package:bebks_ebooks/StartPages/register-page.dart';
+import 'package:bebks_ebooks/pages/StartPages/register-page.dart';
 import 'package:bebks_ebooks/models/colorModel.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -53,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
       if(jsonResponse['status']){
           final myToken = jsonResponse['token'];
           prefs.setString('token', myToken);
-          Navigator.push(context, MaterialPageRoute(builder: (context) => LibraryPage(token: myToken)));
+          Navigator.pushNamed(context, '/library/$myToken');
       }else{
         print('Something went wrong');
       }
@@ -275,8 +275,7 @@ class _LoginPageState extends State<LoginPage> {
         ),
         TextButton(
           onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const RegisterPage()));
+            Navigator.pushNamed(context, '/register');
           },
           child: Text(
             'Đăng ký',

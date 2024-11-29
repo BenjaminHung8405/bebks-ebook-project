@@ -1,9 +1,6 @@
-// import 'package:bebks_ebooks/Library/library-page.dart';
-import 'package:bebks_ebooks/StartPages/login_page.dart';
-import 'package:bebks_ebooks/config/route.dart';
+import 'package:bebks_ebooks/pages/StartPages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:bebks_ebooks/models/colorModel.dart';
-import 'package:go_router/go_router.dart';
 
 class StartPage extends StatelessWidget {
   const StartPage({super.key});
@@ -67,7 +64,7 @@ class StartPage extends StatelessWidget {
                 )
             ),
             onPressed: () async {
-              Navigator.push(
+              Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                       builder: (context) => LoginPage()
