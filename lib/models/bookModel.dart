@@ -1,14 +1,14 @@
 class BookModel{
-  String title;
-  String? category;
-  List<dynamic>? chapter;
-  String coverImage;
+  final String id;
+  final String title;
+  final String coverImage;
+  final List<dynamic>? chapters;
 
   BookModel({
+    required this.id,
     required this.title,
-    this.category,
-    this.chapter,
     required this.coverImage,
-});
+    this.chapters
+  });
 
 }

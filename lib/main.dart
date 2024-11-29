@@ -1,9 +1,8 @@
-import 'package:bebks_ebooks/Library/library-page.dart';
 import 'package:flutter/material.dart';
-import 'package:bebks_ebooks/StartPages/start-page.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';  
+import 'config/route.dart';
 
 Future main() async {
   // To load the .env file contents into dotenv.
@@ -34,7 +33,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    final router = createRouter(token);
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: 'SF-Pro',
@@ -42,7 +42,11 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Color(0xFF14161B),
         useMaterial3: true,
         ),
-      home: (token.isNotEmpty && !JwtDecoder.isExpired(token)) ? LibraryPage(token: token) : StartPage(),
+      // routerConfig: router,
+      routerDelegate: router.routerDelegate,
+      routeInformationParser: router.routeInformationParser,
+      routeInformationProvider: router.routeInformationProvider,
+      // home: (token.isNotEmpty && !JwtDecoder.isExpired(token)) ? LibraryPage(token: token) : StartPage(),
     );
   }
 }

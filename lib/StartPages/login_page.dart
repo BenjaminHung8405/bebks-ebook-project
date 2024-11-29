@@ -1,4 +1,4 @@
-import 'package:bebks_ebooks/Library/library-page.dart';
+import 'package:bebks_ebooks/pages/library_page.dart';
 import 'package:bebks_ebooks/StartPages/register-page.dart';
 import 'package:bebks_ebooks/models/colorModel.dart';
 import 'package:flutter/material.dart';

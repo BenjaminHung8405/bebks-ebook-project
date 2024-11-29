@@ -1,0 +1,80 @@
+import 'package:bebks_ebooks/models/bookModel.dart';
+import 'package:flutter/material.dart';
+import 'package:bebks_ebooks/models/colorModel.dart';
+import 'package:bebks_ebooks/services/api.dart';
+import 'package:bebks_ebooks/widgets/title.dart';
+import 'package:go_router/go_router.dart';
+
+class BookRead extends StatefulWidget {
+  final String bookId;
+
+  const BookRead({required this.bookId, Key? key}) : super(key: key);
+
+  @override
+  State<BookRead> createState() => _BookReadState();
+}
+
+class _BookReadState extends State<BookRead> {
+  late BookModel book;
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchBookById();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Scaffold(
+      backgroundColor: ColorModel.primaryColor,
+      body: isLoading ? Center(child: CircularProgressIndicator()): NestedScrollView(
+        headerSliverBuilder: (context, innerBoxIsScrolled) => [
+          SliverAppBar(
+            toolbarHeight: 70,
+            backgroundColor: ColorModel.primaryColor,
+            automaticallyImplyLeading: false,
+            floating: true,
+            snap: true,
+            centerTitle: true,
+            title: titleWidget(title: book.title, size: 25, padding: 0,),
+            leading: GestureDetector(
+              onTap: () async {
+                context.goNamed('library');
+              },
+              child: Container(
+                margin: EdgeInsets.all(10),
+                alignment: Alignment.center,
+                width: 37,
+                child: Icon(
+                  Icons.arrow_back_ios_rounded,
+                  size: 30,
+                  ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.transparent
+                ),
+              ),
+            )
+          )], 
+        body: SizedBox()
+        )
+    );
+  }
+
+  Future<void> fetchBookById() async {
+    try {
+      final response = await BookApi.fetchBookById(widget.bookId);
+      setState(() {
+        book = response;
+        isLoading = false;
+      });
+    } catch (e) {
+      isLoading = true;
+      print('Failed to fetch book by id: $e');
+    }
+  }
+
+}

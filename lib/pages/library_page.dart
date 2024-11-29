@@ -8,20 +8,18 @@ import 'package:bebks_ebooks/widgets/searchBar.dart';
 import 'package:bebks_ebooks/widgets/RoundedImage.dart';
 import 'package:bebks_ebooks/widgets/title.dart';
 import 'package:bebks_ebooks/models/colorModel.dart';
-import 'package:bebks_ebooks/models/chapterModel.dart';
+import 'package:go_router/go_router.dart';
 
 class LibraryPage extends StatefulWidget {
   final token;
-  const LibraryPage({@required this.token, Key? key}) : super(key: key);
+  const LibraryPage({required this.token, Key? key}) : super(key: key);
 
   @override
   State<LibraryPage> createState() => _LibraryPageState();
 }
 
 class _LibraryPageState extends State<LibraryPage> {
-  @override
   List<AppBanner> banners = [];
-  List<ChapterModel> chapters = [];
   List<BookModel> books = [];
   bool isLoading = true;
   int myCurrentIndex = 0;
@@ -31,7 +29,6 @@ class _LibraryPageState extends State<LibraryPage> {
     // TODO: implement initState
     super.initState();
     fetchBanners();
-    fetchChapters();
     fetchBooks();
   }
 
@@ -77,9 +74,10 @@ class _LibraryPageState extends State<LibraryPage> {
                 const SizedBox(height: 30,),
                 titleWidget(title: 'Nổi bật',),
                 const SizedBox(height: 5,),
+                isLoading ? Center(child: CircularProgressIndicator()) : 
                 _bannerSlider(),
                 const SizedBox(height: 20,),
-                isLoading ? Center(child: CircularProgressIndicator()): 
+                isLoading ? Center(child: CircularProgressIndicator()) : 
                 _bookList()
               ],
             ),
@@ -93,20 +91,27 @@ class _LibraryPageState extends State<LibraryPage> {
                 children: [
                   titleWidget(title: 'Dành cho bạn'),
                   const SizedBox(height: 5,),
-                  ListView.separated(
+                  GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 15,
+                      childAspectRatio: 0.57
+                      ),
+                    physics: ClampingScrollPhysics(),
+                    padding: EdgeInsets.symmetric(horizontal: 10),
                     shrinkWrap: true,
                     itemCount: books.length, 
-                    separatorBuilder: (context, index) => const SizedBox(height: 25,), 
                     itemBuilder: (context, index) {
                       final book = books[index];
                       return GestureDetector(
-                        onTap: () {
-                          
+                        onTap: () async {
+                          context.go('/read/${book.id}');
                         },
                         child: Container(
                           padding: EdgeInsets.all(10),
-                          height: 150,
-                          child: Row(
+                          height: 240,
+                          child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               ClipRRect(
@@ -119,13 +124,14 @@ class _LibraryPageState extends State<LibraryPage> {
                                   },
                                   ),
                               ),
+                              const SizedBox(height: 10,),
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   titleWidget(
                                     title: book.title,
                                     padding: 20,
-                                    size: 18,
+                                    size: (book.title.length > 17)? 16 : 18,
                                     )
                                 ],
                               )
@@ -196,27 +202,30 @@ class _LibraryPageState extends State<LibraryPage> {
   }
 
   Future<void> fetchBanners() async {
-    final response = await BannerApi.fetchBanners();
-    setState(() {
-      banners = response;
-      isLoading = false;
-    });
-  }
-
-  Future<void> fetchChapters() async {
-    final response = await ChapterApi.fetchChapters();
-    setState(() {
-      chapters = response;
-      isLoading = false;
-    });
+    try {
+      final response = await BannerApi.fetchBanners();
+      setState(() {
+        banners = response;
+        isLoading = false;
+      });
+    } catch (e) {
+      isLoading = true;
+      print('Failed to fetch banners: $e');
+    }
+    
   }
 
   Future<void> fetchBooks() async {
-    final response = await BookApi.fetchBooks();
-    setState(() {
-      books = response;
-      isLoading = false;
-    });
+    try {
+      final response = await BookApi.fetchBooks();
+      setState(() {
+        books = response;
+        isLoading = false;
+      });
+    } catch (e) {
+      isLoading = true;
+      print('Failed to fetch book: $e');
+    }
   }
 }
 
