@@ -1,3 +1,4 @@
+import 'package:bebks_ebooks/config/app_size.dart';
 import 'package:bebks_ebooks/pages/StartPages/start_page.dart';
 import 'package:bebks_ebooks/pages/library_page.dart';
 import 'package:flutter/material.dart';
@@ -35,18 +36,23 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        fontFamily: 'SF-Pro',
-        colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF14161B)),
-        scaffoldBackgroundColor: Color(0xFF14161B),
-        useMaterial3: true,
-        ),
-      initialRoute: (token.isNotEmpty && !JwtDecoder.isExpired(token)) ? '/library' : '/',
-      onGenerateRoute: generateRoute,
-      routes: routes,
-      // home: (token.isNotEmpty && !JwtDecoder.isExpired(token)) ? LibraryPage(token: token) : StartPage(),
+    return Builder(
+      builder: (context) {
+        AppSizes().init(context);
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            fontFamily: 'SF-Pro',
+            colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF14161B)),
+            scaffoldBackgroundColor: Color(0xFF14161B),
+            useMaterial3: true,
+            ),
+          initialRoute: (token.isNotEmpty && !JwtDecoder.isExpired(token)) ? '/library' : '/',
+          onGenerateRoute: generateRoute,
+          routes: routes,
+          // home: (token.isNotEmpty && !JwtDecoder.isExpired(token)) ? LibraryPage(token: token) : StartPage(),
+        );
+      },
     );
   }
 }

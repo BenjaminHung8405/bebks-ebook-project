@@ -25,7 +25,7 @@ class SearchBarWidget extends StatelessWidget {
             ),
           ),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(15),
             borderSide: BorderSide.none,
           ),
         ),
