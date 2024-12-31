@@ -1,6 +1,6 @@
 import 'package:bebks_ebooks/config/app_size.dart';
-import 'package:bebks_ebooks/pages/StartPages/start_page.dart';
-import 'package:bebks_ebooks/pages/library_page.dart';
+import 'package:bebks_ebooks/pages/others/start_page.dart';
+import 'package:bebks_ebooks/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
     return Builder(
       builder: (context) {
         AppSizes().init(context);
-        return MaterialApp(
+        return MaterialApp.router(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             fontFamily: 'SF-Pro',
@@ -47,9 +47,7 @@ class MyApp extends StatelessWidget {
             scaffoldBackgroundColor: Color(0xFF14161B),
             useMaterial3: true,
             ),
-          initialRoute: (token.isNotEmpty && !JwtDecoder.isExpired(token)) ? '/library' : '/',
-          onGenerateRoute: generateRoute,
-          routes: routes,
+          routerConfig: AppRouter.router,
           // home: (token.isNotEmpty && !JwtDecoder.isExpired(token)) ? LibraryPage(token: token) : StartPage(),
         );
       },

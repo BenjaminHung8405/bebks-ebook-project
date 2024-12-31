@@ -1,7 +1,8 @@
 import 'dart:convert';
 
-import 'package:bebks_ebooks/pages/StartPages/login_page.dart';
+import 'package:bebks_ebooks/pages/auth/presentations/login_page.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'package:bebks_ebooks/models/environment.dart';
 import 'package:bebks_ebooks/models/colorModel.dart';
@@ -43,7 +44,7 @@ class _RegisterPageState extends State<RegisterPage> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Đăng ký thành công!')),
         );
-        Navigator.pushNamed(context, '/login');
+        context.push('/login');
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Lỗi: ${response.body}')),
@@ -181,8 +182,7 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
         TextButton(
           onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const LoginPage()));
+            context.push('/login');
           },
           child: Text(
             'Đăng nhập',

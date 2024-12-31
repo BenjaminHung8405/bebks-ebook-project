@@ -1,7 +1,9 @@
-import 'package:bebks_ebooks/pages/library_page.dart';
-import 'package:bebks_ebooks/pages/StartPages/register-page.dart';
+import 'package:bebks_ebooks/pages/home_page.dart';
+import 'package:bebks_ebooks/pages/auth/presentations/register-page.dart';
 import 'package:bebks_ebooks/models/colorModel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'package:bebks_ebooks/models/environment.dart';
 import 'dart:convert';
@@ -21,17 +23,12 @@ class _LoginPageState extends State<LoginPage> {
   bool _isLoading = false;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  late SharedPreferences prefs;
+  final storage = const FlutterSecureStorage();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    initSharedPref();
-  }
-
-  void initSharedPref() async {
-    prefs = await SharedPreferences.getInstance();
   }
 
   Future<void> loginUser() async {
@@ -52,8 +49,11 @@ class _LoginPageState extends State<LoginPage> {
       final jsonResponse = jsonDecode(response.body);
       if(jsonResponse['status']){
           final myToken = jsonResponse['token'];
-          prefs.setString('token', myToken);
-          Navigator.pushNamed(context, '/library/$myToken');
+          await storage.write(
+            key: 'access_token', value: myToken);
+          await storage.write(
+              key: 'refresh_token', value: myToken);
+          context.pushReplacement('/main');
       }else{
         print('Something went wrong');
       }
@@ -275,7 +275,7 @@ class _LoginPageState extends State<LoginPage> {
         ),
         TextButton(
           onPressed: () {
-            Navigator.pushNamed(context, '/register');
+            context.push('/register');
           },
           child: Text(
             'Đăng ký',

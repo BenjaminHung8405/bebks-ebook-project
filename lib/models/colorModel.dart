@@ -9,4 +9,6 @@ class ColorModel {
 
   static Color backgroundColor = const Color(0xfff0f0f0);
   static Color containerColor = const Color(0xfff0f0ff);
+
+  static Color buttonColor = const Color(0xffff8d21);
 }
