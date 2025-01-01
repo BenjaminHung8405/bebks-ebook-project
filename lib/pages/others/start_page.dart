@@ -1,4 +1,3 @@
-import 'package:bebks_ebooks/pages/auth/presentations/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:bebks_ebooks/models/colorModel.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -17,7 +16,7 @@ class _StartPageState extends State<StartPage> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 4), () {
       checkCredentials();
     });
   }
@@ -73,8 +72,7 @@ class _StartPageState extends State<StartPage> {
             ),
           ),
           SizedBox(height: 30),
-          ElevatedButton.icon(
-            label: Text(
+          Text(
               'Cùng bắt đầu nào',
               style: TextStyle(
                   color: ColorModel.primaryColor,
@@ -82,28 +80,6 @@ class _StartPageState extends State<StartPage> {
                   fontWeight: FontWeight.w600
               ),
             ),
-            icon: Icon(
-              Icons.book,
-              color: ColorModel.primaryColor,
-            ),
-            style: ElevatedButton.styleFrom(
-                minimumSize: Size(330, 48),
-                backgroundColor: ColorModel.secondaryColor,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12)
-                )
-            ),
-            onPressed: () async {
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => LoginPage()
-                  )
-              );
-              // context.goNamed('login');
-            },
-
-          )
         ],
       ),
     );

@@ -18,7 +18,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<AppBanner> banners = [];
   List<BookModel> books = [];
-  var book = null;
+  BookModel book = BookModel(id: '', title: '', coverImage: '');
   bool _isLoading = true;
   int myCurrentIndex = 0;
 
@@ -83,18 +83,44 @@ class _HomePageState extends State<HomePage> {
                       ),
                       SizedBox(height: AppSizes.blockSizeHorizontal * 2,),
                       Container(
-                        height: AppSizes.blockSizeHorizontal * 40,
-                        child: ListView.builder(
+                        height: AppSizes.blockSizeHorizontal * 60,
+                        child: ListView.separated(
                           shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
                           itemCount: books.length,
+                          separatorBuilder: (context, index) => SizedBox(width: AppSizes.blockSizeHorizontal * 7,),
                           itemBuilder: (context, index) {
                             book = books[index];
                             return Container(
                               width: AppSizes.blockSizeHorizontal * 30,
                               decoration: BoxDecoration(
-                                color: ColorModel.backgroundColor,
-                                borderRadius: BorderRadius.circular(AppSizes.blockSizeHorizontal * 3)
+                                color: ColorModel.primaryColor,
+                                borderRadius: BorderRadius.circular(AppSizes.blockSizeHorizontal * 3),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    height: AppSizes.blockSizeHorizontal * 45,
+                                    child: RoundedImage(
+                                      imageUrl: book.coverImage,
+                                      borderRadius: AppSizes.blockSizeHorizontal * 2,
+                                      fit: BoxFit.fitHeight,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: AppSizes.blockSizeHorizontal * 2),
+                                    child: Text(
+                                      book.title,
+                                      style: TextStyle(
+                                        color: ColorModel.textColor,
+                                        fontSize: AppSizes.blockSizeHorizontal * 3.5,
+                                        fontWeight: FontWeight.w600
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  )
+                                ],
                               ),
                             );
                           },
