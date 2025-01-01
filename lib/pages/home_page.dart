@@ -46,16 +46,15 @@ class _HomePageState extends State<HomePage> {
             centerTitle: true,
             title: titleWidget(title: 'BEBKs', size: AppSizes.blockSizeHorizontal * 5, padding: 0,),
           )],
-          body: ListView(
+          body: SingleChildScrollView(
             padding: EdgeInsets.symmetric(horizontal: AppSizes.blockSizeHorizontal * 4),
-            children: [
-                SizedBox(height: AppSizes.blockSizeHorizontal * 1,),
-                _isLoading ? Center(child: CircularProgressIndicator()) : 
-                _trendingBox(),
-                SizedBox(height: AppSizes.blockSizeHorizontal * 4,),
-                Container(
-                  width: AppSizes.screenWidth,
-                  child: Column(
+            child: Column(
+              children: [
+                  SizedBox(height: AppSizes.blockSizeHorizontal * 1,),
+                  _isLoading ? Center(child: CircularProgressIndicator()) : 
+                  _trendingBox(),
+                  SizedBox(height: AppSizes.blockSizeHorizontal * 4,),
+                  Column(
                     children: [
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: AppSizes.blockSizeHorizontal * 4),
@@ -83,22 +82,31 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       SizedBox(height: AppSizes.blockSizeHorizontal * 2,),
-                      ListView.builder(
-                        itemCount: books.length,
-                        itemBuilder: (context, index) {
-                          book = books[index];
-                          return Container(
-                            
-                          );
-                        },
+                      Container(
+                        height: AppSizes.blockSizeHorizontal * 40,
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          itemCount: books.length,
+                          itemBuilder: (context, index) {
+                            book = books[index];
+                            return Container(
+                              width: AppSizes.blockSizeHorizontal * 30,
+                              decoration: BoxDecoration(
+                                color: ColorModel.backgroundColor,
+                                borderRadius: BorderRadius.circular(AppSizes.blockSizeHorizontal * 3)
+                              ),
+                            );
+                          },
+                        ),
                       )
                     ]
                   )
-                )
-                
-              ],
-            ),
-          )
+                  
+                ],
+            )
+          ),
+        )
       );
   }
 
