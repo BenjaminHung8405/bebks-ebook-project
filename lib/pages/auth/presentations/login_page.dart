@@ -1,5 +1,3 @@
-import 'package:bebks_ebooks/pages/home_page.dart';
-import 'package:bebks_ebooks/pages/auth/presentations/register-page.dart';
 import 'package:bebks_ebooks/models/colorModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -7,9 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'package:bebks_ebooks/models/environment.dart';
 import 'dart:convert';
-
-import 'package:shared_preferences/shared_preferences.dart';
-
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -57,9 +52,6 @@ class _LoginPageState extends State<LoginPage> {
       }else{
         print('Something went wrong');
       }
-
-        print('Status Code: ${response.statusCode}');
-        print('Response Body: ${response.body}');
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         ScaffoldMessenger.of(context).showSnackBar(

@@ -18,7 +18,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<AppBanner> banners = [];
   List<BookModel> books = [];
-  BookModel book = BookModel(id: '', title: '', coverImage: '');
+  BookModel book = BookModel(id: '', title: '', coverImage: '', author: '');
   bool _isLoading = true;
   int myCurrentIndex = 0;
 
@@ -28,6 +28,33 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     fetchBanners();
     fetchBooks();
+  }
+
+  Future<void> fetchBanners() async {
+    try {
+      final response = await BannerApi.fetchBanners();
+      setState(() {
+        banners = response;
+        _isLoading = false;
+      });
+    } catch (e) {
+      _isLoading = true;
+      print('Failed to fetch banners: $e');
+    }
+    
+  }
+
+  Future<void> fetchBooks() async {
+    try {
+      final response = await BookApi.fetchBooks();
+      setState(() {
+        books = response;
+        _isLoading = false;
+      });
+    } catch (e) {
+      _isLoading = true;
+      print('Failed to fetch book: $e');
+    }
   }
 
   @override
@@ -47,88 +74,16 @@ class _HomePageState extends State<HomePage> {
             title: titleWidget(title: 'BEBKs', size: AppSizes.blockSizeHorizontal * 5, padding: 0,),
           )],
           body: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
             padding: EdgeInsets.symmetric(horizontal: AppSizes.blockSizeHorizontal * 4),
             child: Column(
               children: [
                   SizedBox(height: AppSizes.blockSizeHorizontal * 1,),
                   _isLoading ? Center(child: CircularProgressIndicator()) : 
                   _trendingBox(),
-                  SizedBox(height: AppSizes.blockSizeHorizontal * 4,),
-                  Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: AppSizes.blockSizeHorizontal * 4),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            titleWidget(
-                              title: 'Dành cho bạn',
-                              padding: 0,
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                
-                              },
-                              child: Text(
-                                'See all',
-                                style: TextStyle(
-                                  color: ColorModel.buttonColor,
-                                  fontSize: AppSizes.blockSizeHorizontal * 3,
-                                  fontWeight: FontWeight.w500
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: AppSizes.blockSizeHorizontal * 2,),
-                      Container(
-                        height: AppSizes.blockSizeHorizontal * 60,
-                        child: ListView.separated(
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          itemCount: books.length,
-                          separatorBuilder: (context, index) => SizedBox(width: AppSizes.blockSizeHorizontal * 7,),
-                          itemBuilder: (context, index) {
-                            book = books[index];
-                            return Container(
-                              width: AppSizes.blockSizeHorizontal * 30,
-                              decoration: BoxDecoration(
-                                color: ColorModel.primaryColor,
-                                borderRadius: BorderRadius.circular(AppSizes.blockSizeHorizontal * 3),
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    height: AppSizes.blockSizeHorizontal * 45,
-                                    child: RoundedImage(
-                                      imageUrl: book.coverImage,
-                                      borderRadius: AppSizes.blockSizeHorizontal * 2,
-                                      fit: BoxFit.fitHeight,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(left: AppSizes.blockSizeHorizontal * 2),
-                                    child: Text(
-                                      book.title,
-                                      style: TextStyle(
-                                        color: ColorModel.textColor,
-                                        fontSize: AppSizes.blockSizeHorizontal * 3.5,
-                                        fontWeight: FontWeight.w600
-                                      ),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            );
-                          },
-                        ),
-                      )
-                    ]
-                  )
-                  
+                  SizedBox(height: AppSizes.blockSizeHorizontal * 1,),
+                  _recentRead(),
+                  SizedBox(height: AppSizes.blockSizeHorizontal * 50,)
                 ],
             )
           ),
@@ -136,10 +91,8 @@ class _HomePageState extends State<HomePage> {
       );
   }
 
-  Container _trendingBox() {
-    return Container(
-                width: AppSizes.screenWidth,
-                child: Column(
+  Column _recentRead() {
+    return Column(
                   children: [
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: AppSizes.blockSizeHorizontal * 4),
@@ -147,7 +100,7 @@ class _HomePageState extends State<HomePage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           titleWidget(
-                            title: 'Nổi bật',
+                            title: 'Gần đây',
                             padding: 0,
                           ),
                           TextButton(
@@ -165,6 +118,92 @@ class _HomePageState extends State<HomePage> {
                           )
                         ],
                       ),
+                    ),
+                    SizedBox(height: AppSizes.blockSizeHorizontal * 2,),
+                    Container(
+                      height: AppSizes.blockSizeHorizontal * 60,
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: books.length,
+                        itemBuilder: (context, index) {
+                          book = books[index];
+                          return Padding(
+                            padding: EdgeInsets.symmetric(horizontal: AppSizes.blockSizeHorizontal * 4),
+                            child: Container(
+                              width: AppSizes.blockSizeHorizontal * 30,
+                              decoration: BoxDecoration(
+                                color: ColorModel.primaryColor,
+                                borderRadius: BorderRadius.circular(AppSizes.blockSizeHorizontal * 3),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    height: AppSizes.blockSizeHorizontal * 45,
+                                    child: RoundedImage(
+                                      imageUrl: book.coverImage,
+                                      borderRadius: AppSizes.blockSizeHorizontal * 1,
+                                      fit: BoxFit.fitHeight,
+                                    ),
+                                  ),
+                                  SizedBox(height: AppSizes.blockSizeHorizontal * 1),
+                                  Text(
+                                    book.title,
+                                    style: TextStyle(
+                                      color: ColorModel.textColor,
+                                      fontSize: AppSizes.blockSizeHorizontal * 3.5,
+                                      fontWeight: FontWeight.w600
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  SizedBox(height: AppSizes.blockSizeHorizontal * 1),
+                                  Text(
+                                    book.author,
+                                    style: TextStyle(
+                                      color: ColorModel.lightTextColor,
+                                      fontSize: AppSizes.blockSizeHorizontal * 2.5,
+                                      fontWeight: FontWeight.w500
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                  )
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    )
+                  ]
+                );
+  }
+
+  Container _trendingBox() {
+    return Container(
+                width: AppSizes.screenWidth,
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        titleWidget(
+                          title: 'Nổi bật',
+                          padding: AppSizes.blockSizeHorizontal * 4,
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            
+                          },
+                          child: Text(
+                            'See all',
+                            style: TextStyle(
+                              color: ColorModel.buttonColor,
+                              fontSize: AppSizes.blockSizeHorizontal * 3,
+                              fontWeight: FontWeight.w500
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                     SizedBox(height: AppSizes.blockSizeHorizontal * 2,),
                     _bannerSlider(),
@@ -223,33 +262,6 @@ class _HomePageState extends State<HomePage> {
                   ]
                 )
               );
-  }
-
-  Future<void> fetchBanners() async {
-    try {
-      final response = await BannerApi.fetchBanners();
-      setState(() {
-        banners = response;
-        _isLoading = false;
-      });
-    } catch (e) {
-      _isLoading = true;
-      print('Failed to fetch banners: $e');
-    }
-    
-  }
-
-  Future<void> fetchBooks() async {
-    try {
-      final response = await BookApi.fetchBooks();
-      setState(() {
-        books = response;
-        _isLoading = false;
-      });
-    } catch (e) {
-      _isLoading = true;
-      print('Failed to fetch book: $e');
-    }
   }
 }
 

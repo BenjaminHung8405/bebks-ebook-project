@@ -52,6 +52,7 @@ class BookApi {
           id: e['_id'],
           title: e['title'],
           coverImage:  e['coverImage'],
+          author: e['author']
         );
       }).toList();
       return book;
@@ -69,7 +70,8 @@ class BookApi {
         id: json['_id'],
         title: json['title'],
         coverImage: json['coverImage'],
-        chapters: json['chapters']
+        chapters: json['chapters'],
+        author: json['author']
       );
     return book;
   }
