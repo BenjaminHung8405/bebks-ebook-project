@@ -2,7 +2,7 @@ import 'package:bebks_ebooks/pages/auth/presentations/login_page.dart';
 import 'package:bebks_ebooks/pages/auth/presentations/register-page.dart';
 import 'package:bebks_ebooks/pages/others/start_page.dart';
 import 'package:bebks_ebooks/pages/layout/presentation/main_layout.dart';
-import 'package:bebks_ebooks/pages/home_page.dart';
+import 'package:bebks_ebooks/pages/screens/home_page.dart';
 import 'package:go_router/go_router.dart';
 
 class AppRouter{

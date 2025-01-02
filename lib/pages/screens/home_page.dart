@@ -1,9 +1,11 @@
 import 'package:bebks_ebooks/config/app_size.dart';
 import 'package:bebks_ebooks/models/bannerModel.dart';
 import 'package:bebks_ebooks/models/bookModel.dart';
+import 'package:bebks_ebooks/models/userModel.dart';
 import 'package:bebks_ebooks/services/api.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:bebks_ebooks/widgets/RoundedImage.dart';
 import 'package:bebks_ebooks/widgets/title.dart';
@@ -19,8 +21,10 @@ class _HomePageState extends State<HomePage> {
   List<AppBanner> banners = [];
   List<BookModel> books = [];
   BookModel book = BookModel(id: '', title: '', coverImage: '', author: '');
+  UserModel user = UserModel(id: '', name: '', email: '', password: '',pictures: PictureModel(large: '', medium: '', thumbnail: ''));
   bool _isLoading = true;
   int myCurrentIndex = 0;
+  final storage = const FlutterSecureStorage();
 
   @override
   void initState() {
@@ -28,6 +32,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     fetchBanners();
     fetchBooks();
+    fetchUserById();
   }
 
   Future<void> fetchBanners() async {
@@ -57,6 +62,22 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  Future<void> fetchUserById() async {
+    final id = await storage.read(key: 'userId');
+    try {
+      if(id != null){
+        final response = await UserApi.fetchUserByEmail(id);
+        setState(() {
+          user = response;
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      _isLoading = true;
+      print('Failed to fetch user: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,8 +91,18 @@ class _HomePageState extends State<HomePage> {
             automaticallyImplyLeading: false,
             floating: true,
             snap: true,
-            centerTitle: true,
-            title: titleWidget(title: 'BEBKs', size: AppSizes.blockSizeHorizontal * 5, padding: 0,),
+            title: titleWidget(title: 'BEBKs', size: AppSizes.blockSizeHorizontal * 5, padding: AppSizes.blockSizeHorizontal * 2,),
+            actions: [
+              _isLoading ? Center(child: CircularProgressIndicator()): 
+              AppSizes.isLoading ? Center(child: CircularProgressIndicator()): 
+              ClipRRect(
+                borderRadius: BorderRadius.circular(AppSizes.blockSizeHorizontal * 40),
+                child: Image.network(
+                  user.pictures.thumbnail,
+                  scale: AppSizes.blockSizeHorizontal * 2,
+                ),
+              )
+            ],
           )],
           body: SingleChildScrollView(
             scrollDirection: Axis.vertical,
@@ -206,9 +237,7 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                     SizedBox(height: AppSizes.blockSizeHorizontal * 2,),
-                    _bannerSlider(),
-                    SizedBox(height: AppSizes.blockSizeHorizontal * 4,),
-                    
+                    _bannerSlider(),                   
                   ],
                 )
               );

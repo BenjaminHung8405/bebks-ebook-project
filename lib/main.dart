@@ -1,6 +1,6 @@
 import 'package:bebks_ebooks/config/app_size.dart';
 import 'package:bebks_ebooks/pages/others/start_page.dart';
-import 'package:bebks_ebooks/pages/home_page.dart';
+import 'package:bebks_ebooks/pages/screens/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';

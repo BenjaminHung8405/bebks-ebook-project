@@ -48,6 +48,8 @@ class _LoginPageState extends State<LoginPage> {
             key: 'access_token', value: myToken);
           await storage.write(
               key: 'refresh_token', value: myToken);
+          await storage.write(
+            key: 'userId', value: jsonResponse['id']);
           context.pushReplacement('/main');
       }else{
         print('Something went wrong');
@@ -267,7 +269,7 @@ class _LoginPageState extends State<LoginPage> {
         ),
         TextButton(
           onPressed: () {
-            context.push('/register');
+            context.push('/regis');
           },
           child: Text(
             'Đăng ký',
