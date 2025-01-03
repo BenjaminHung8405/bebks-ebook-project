@@ -1,4 +1,4 @@
-import 'package:bebks_ebooks/models/colorModel.dart';
+import 'package:bebks_ebooks/utils/colorModel.dart';
 import 'package:flutter/material.dart';
 
 import '../../../config/app_size.dart';

@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:bebks_ebooks/models/userModel.dart';
 import 'package:http/http.dart' as http;
-import 'package:bebks_ebooks/models/environment.dart';
+import 'package:bebks_ebooks/utils/environment.dart';
 import 'package:bebks_ebooks/models/bannerModel.dart';
 import 'package:bebks_ebooks/models/bookModel.dart';
 import 'package:bebks_ebooks/models/chapterModel.dart';
@@ -53,7 +53,8 @@ class BookApi {
           id: e['_id'],
           title: e['title'],
           coverImage:  e['coverImage'],
-          author: e['author']
+          author: e['author'],
+          rate: e['rate']
         );
       }).toList();
       return book;
@@ -72,7 +73,8 @@ class BookApi {
         title: json['title'],
         coverImage: json['coverImage'],
         chapters: json['chapters'],
-        author: json['author']
+        author: json['author'],
+        rate: json['rate']
       );
     return book;
   }

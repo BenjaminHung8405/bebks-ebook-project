@@ -7,7 +7,7 @@ class ColorModel {
   static Color lightTextColor = const Color(0xff83899f);
   static Color borderColor = const Color(0xFFD0DBEA);
 
-  static Color backgroundColor = const Color(0xfff0f0f0);
+  static Color backgroundColor = const Color(0xfff3f3f3);
   static Color containerColor = const Color(0xfff0f0ff);
 
   static Color buttonColor = const Color(0xffff8d21);

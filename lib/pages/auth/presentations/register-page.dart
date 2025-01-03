@@ -4,8 +4,8 @@ import 'package:bebks_ebooks/pages/auth/presentations/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
-import 'package:bebks_ebooks/models/environment.dart';
-import 'package:bebks_ebooks/models/colorModel.dart';
+import 'package:bebks_ebooks/utils/environment.dart';
+import 'package:bebks_ebooks/utils/colorModel.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});

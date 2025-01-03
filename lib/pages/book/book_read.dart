@@ -1,7 +1,7 @@
 import 'package:bebks_ebooks/models/bookModel.dart';
 import 'package:bebks_ebooks/models/chapterModel.dart';
 import 'package:flutter/material.dart';
-import 'package:bebks_ebooks/models/colorModel.dart';
+import 'package:bebks_ebooks/utils/colorModel.dart';
 import 'package:bebks_ebooks/services/api.dart';
 import 'package:bebks_ebooks/widgets/title.dart';
 

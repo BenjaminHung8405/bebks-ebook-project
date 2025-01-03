@@ -1,9 +1,9 @@
-import 'package:bebks_ebooks/models/colorModel.dart';
+import 'package:bebks_ebooks/utils/colorModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
-import 'package:bebks_ebooks/models/environment.dart';
+import 'package:bebks_ebooks/utils/environment.dart';
 import 'dart:convert';
 
 class LoginPage extends StatefulWidget {

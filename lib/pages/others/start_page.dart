@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:bebks_ebooks/models/colorModel.dart';
+import 'package:bebks_ebooks/utils/colorModel.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 

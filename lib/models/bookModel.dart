@@ -3,6 +3,7 @@ class BookModel{
   final String title;
   final String coverImage;
   final String author;
+  final double rate;
   final List<dynamic>? chapters;
 
   BookModel({
@@ -10,6 +11,7 @@ class BookModel{
     required this.title,
     required this.coverImage,
     required this.author,
+    required this.rate,
     this.chapters
   });
 
