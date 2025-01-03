@@ -7,6 +7,8 @@ import 'package:http/http.dart' as http;
 import 'package:bebks_ebooks/utils/environment.dart';
 import 'package:bebks_ebooks/utils/colorModel.dart';
 
+import '../../../config/app_size.dart';
+
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
 
@@ -69,58 +71,58 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: EdgeInsets.symmetric(horizontal: AppSizes.blockSizeHorizontal * 3),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const SizedBox(height: 30),
+              SizedBox(height: AppSizes.blockSizeHorizontal * 6),
               Text(
                 'Tạo tài khoản của bạn',
                 style: TextStyle(
                   color: ColorModel.textColor,
-                  fontSize: 30,
+                  fontSize: AppSizes.blockSizeHorizontal * 6,
                   fontWeight: FontWeight.w700
                   ),
                   
                   ),
-              const SizedBox(height: 50),
+              SizedBox(height: AppSizes.blockSizeHorizontal * 10),
               _buildTextField(
                 hintText: 'Tên người dùng', 
                 prefixIcon: Icons.person, 
                 controller: userController
                 ),
-              const SizedBox(height: 20),
+              SizedBox(height: AppSizes.blockSizeHorizontal * 4),
               _buildTextField(
                 controller: emailController,
                 hintText: 'Email', 
                 prefixIcon: Icons.mail_outline_rounded,
                 ),
-              const SizedBox(height: 20),
+              SizedBox(height: AppSizes.blockSizeHorizontal * 4),
               _buildTextField(
                 controller: passwordController,
                 hintText: 'Mật khẩu', 
                 prefixIcon: Icons.lock_outline_rounded,
                 isPassword: true
                 ),
-              const SizedBox(height: 40),
+              SizedBox(height: AppSizes.blockSizeHorizontal * 8),
               ElevatedButton(
                 onPressed: registerUser,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: ColorModel.secondaryColor,
-                  minimumSize: const Size(double.infinity, 48),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+                  minimumSize: Size(double.infinity, AppSizes.blockSizeHorizontal * 10),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppSizes.blockSizeHorizontal * 5)),
                 ), 
                 child: _isLoading
-                ? CircularProgressIndicator(color: ColorModel.secondaryColor, strokeWidth: 2)
+                ? CircularProgressIndicator(color: ColorModel.secondaryColor, strokeWidth: AppSizes.blockSizeHorizontal * 0.5)
                 : Text(
                     'Đăng ký',
                     style: TextStyle(
-                        fontSize: 25,
+                        fontSize: AppSizes.blockSizeHorizontal * 5,
                         color: ColorModel.primaryColor,
                         fontWeight: FontWeight.w700),
                   ),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: AppSizes.blockSizeHorizontal * 4),
             _buildReturnLogin()
 
             ],
@@ -140,33 +142,33 @@ class _RegisterPageState extends State<RegisterPage> {
       controller: controller,
       obscureText: isPassword && _isObscure,
       style: TextStyle(
-          color: ColorModel.textColor, fontSize: 18, fontWeight: FontWeight.w500),
+          color: ColorModel.textColor, fontSize: AppSizes.blockSizeHorizontal * 4, fontWeight: FontWeight.w500),
       decoration: InputDecoration(
-        contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 0),
+        contentPadding: EdgeInsets.symmetric(vertical: AppSizes.blockSizeHorizontal * 2.5, horizontal: 0),
         hintText: hintText,
         hintStyle: TextStyle(
             color: ColorModel.lightTextColor,
-            fontSize: 16,
+            fontSize: AppSizes.blockSizeHorizontal * 4,
             fontWeight: FontWeight.w400),
-        prefixIcon: Icon(prefixIcon, size: 20),
+        prefixIcon: Icon(prefixIcon, size: AppSizes.blockSizeHorizontal * 4),
         suffixIcon: isPassword
             ? IconButton(
                 icon: Icon(_isObscure ? Icons.visibility_off : Icons.visibility,
-                    size: 20),
+                    size: AppSizes.blockSizeHorizontal * 4),
                 onPressed: () => setState(() => _isObscure = !_isObscure),
               )
             : null,
         border: OutlineInputBorder(
-          borderSide: BorderSide(color: ColorModel.borderColor, width: 1.0),
-          borderRadius: BorderRadius.circular(18)
+          borderSide: BorderSide(color: ColorModel.borderColor, width: AppSizes.blockSizeHorizontal * 0.2),
+          borderRadius: BorderRadius.circular(AppSizes.blockSizeHorizontal * 4)
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: ColorModel.secondaryColor, width: 2.0),
-          borderRadius: BorderRadius.circular(18)
+          borderSide: BorderSide(color: ColorModel.secondaryColor, width: AppSizes.blockSizeHorizontal * 0.2),
+          borderRadius: BorderRadius.circular(AppSizes.blockSizeHorizontal * 4)
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: ColorModel.borderColor, width: 1.0),
-          borderRadius: BorderRadius.circular(18)
+          borderSide: BorderSide(color: ColorModel.borderColor, width: AppSizes.blockSizeHorizontal * 0.2),
+          borderRadius: BorderRadius.circular(AppSizes.blockSizeHorizontal * 4)
         ),
       ),
     );
@@ -178,7 +180,7 @@ class _RegisterPageState extends State<RegisterPage> {
       children: [
         Text(
           'Đã có tài khoản?',
-          style: TextStyle(fontSize: 18, color: ColorModel.lightTextColor),
+          style: TextStyle(fontSize: AppSizes.blockSizeHorizontal * 4, color: ColorModel.lightTextColor),
         ),
         TextButton(
           onPressed: () {
@@ -186,7 +188,7 @@ class _RegisterPageState extends State<RegisterPage> {
           },
           child: Text(
             'Đăng nhập',
-            style: TextStyle(fontSize: 18, color: ColorModel.secondaryColor),
+            style: TextStyle(fontSize: AppSizes.blockSizeHorizontal * 4, color: ColorModel.secondaryColor),
           ),
         )
       ],

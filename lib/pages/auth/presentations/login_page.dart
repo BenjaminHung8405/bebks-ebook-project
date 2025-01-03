@@ -6,6 +6,8 @@ import 'package:http/http.dart' as http;
 import 'package:bebks_ebooks/utils/environment.dart';
 import 'dart:convert';
 
+import '../../../config/app_size.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -81,16 +83,16 @@ class _LoginPageState extends State<LoginPage> {
       backgroundColor: ColorModel.primaryColor,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: EdgeInsets.symmetric(horizontal: AppSizes.blockSizeHorizontal * 3),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(height: 16),
+              SizedBox(height: AppSizes.blockSizeHorizontal * 3),
               Text(
                 'Chào mừng trở lại!',
                 style: TextStyle(
                   fontWeight: FontWeight.w700,
-                  fontSize: 27,
+                  fontSize: AppSizes.blockSizeHorizontal * 6,
                   color: ColorModel.textColor,
                 ),
               ),
@@ -98,24 +100,24 @@ class _LoginPageState extends State<LoginPage> {
                 'Đăng nhập để tiếp tục.',
                 style: TextStyle(
                   fontWeight: FontWeight.w400,
-                  fontSize: 18,
+                  fontSize: AppSizes.blockSizeHorizontal * 3.5,
                   color: ColorModel.lightTextColor,
                 ),
               ),
-              const SizedBox(height: 40),
+              SizedBox(height: AppSizes.blockSizeHorizontal * 8),
               _buildTextField(
                 hintText: 'Email',
                 prefixIcon: Icons.mail_outline_rounded,
                 controller: emailController
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: AppSizes.blockSizeHorizontal * 2.5),
               _buildTextField(
                 controller: passwordController,
                 hintText: 'Mật khẩu',
                 prefixIcon: Icons.lock_outline_rounded,
                 isPassword: true,
               ),
-              const SizedBox(height: 14),
+              SizedBox(height: AppSizes.blockSizeHorizontal * 3),
               Align(
                 alignment: Alignment.centerRight,
                 child: GestureDetector(
@@ -124,26 +126,26 @@ class _LoginPageState extends State<LoginPage> {
                     'Quên mật khẩu?',
                     style: TextStyle(
                       color: ColorModel.secondaryColor,
-                      fontSize: 15,
+                      fontSize: AppSizes.blockSizeHorizontal * 3,
                       fontWeight: FontWeight.w400,
                     ),
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: AppSizes.blockSizeHorizontal * 4),
               _buildLoginButton(),
-              const SizedBox(height: 16),
+              SizedBox(height: AppSizes.blockSizeHorizontal * 4),
               Text(
                 'Hoặc đăng nhập bằng',
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
-                  fontSize: 18,
+                  fontSize: AppSizes.blockSizeHorizontal * 4,
                   color: ColorModel.lightTextColor,
                 ),
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: AppSizes.blockSizeHorizontal * 3),
               _buildSocialLoginButtons(),
-              const SizedBox(height: 16),
+              SizedBox(height: AppSizes.blockSizeHorizontal * 3),
               _buildSignUpRow(),
             ],
           ),
@@ -162,33 +164,33 @@ class _LoginPageState extends State<LoginPage> {
       controller: controller,
       obscureText: isPassword && _isObscure,
       style: TextStyle(
-          color: ColorModel.textColor, fontSize: 18, fontWeight: FontWeight.w500),
+          color: ColorModel.textColor, fontSize: AppSizes.blockSizeHorizontal * 4, fontWeight: FontWeight.w500),
       decoration: InputDecoration(
-        contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 0),
+        contentPadding: EdgeInsets.symmetric(vertical: AppSizes.blockSizeHorizontal * 2.5, horizontal: 0),
         hintText: hintText,
         hintStyle: TextStyle(
             color: ColorModel.lightTextColor,
-            fontSize: 16,
+            fontSize: AppSizes.blockSizeHorizontal * 4,
             fontWeight: FontWeight.w400),
-        prefixIcon: Icon(prefixIcon, size: 20),
+        prefixIcon: Icon(prefixIcon, size: AppSizes.blockSizeHorizontal * 4),
         suffixIcon: isPassword
             ? IconButton(
                 icon: Icon(_isObscure ? Icons.visibility_off : Icons.visibility,
-                    size: 20),
+                    size: AppSizes.blockSizeHorizontal * 4),
                 onPressed: () => setState(() => _isObscure = !_isObscure),
               )
             : null,
         border: OutlineInputBorder(
-          borderSide: BorderSide(color: ColorModel.borderColor, width: 1.0),
-          borderRadius: BorderRadius.circular(18)
+          borderSide: BorderSide(color: ColorModel.borderColor, width: AppSizes.blockSizeHorizontal * 0.2),
+          borderRadius: BorderRadius.circular(AppSizes.blockSizeHorizontal * 4)
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: ColorModel.secondaryColor, width: 2.0),
-          borderRadius: BorderRadius.circular(18)
+          borderSide: BorderSide(color: ColorModel.secondaryColor, width: AppSizes.blockSizeHorizontal * 0.2),
+          borderRadius: BorderRadius.circular(AppSizes.blockSizeHorizontal * 4)
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: ColorModel.borderColor, width: 1.0),
-          borderRadius: BorderRadius.circular(18)
+          borderSide: BorderSide(color: ColorModel.borderColor, width: AppSizes.blockSizeHorizontal * 0.2),
+          borderRadius: BorderRadius.circular(AppSizes.blockSizeHorizontal * 4)
         ),
       ),
     );
@@ -199,15 +201,15 @@ class _LoginPageState extends State<LoginPage> {
       onPressed: loginUser,
       style: ElevatedButton.styleFrom(
         backgroundColor: ColorModel.secondaryColor,
-        minimumSize: const Size(double.infinity, 48),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        minimumSize: Size(double.infinity, AppSizes.blockSizeHorizontal * 10),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppSizes.blockSizeHorizontal * 5)),
       ),
       child: _isLoading
-          ? CircularProgressIndicator(color: ColorModel.primaryColor, strokeWidth: 2)
+          ? CircularProgressIndicator(color: ColorModel.primaryColor, strokeWidth: AppSizes.blockSizeHorizontal * 0.5)
           : Text(
               'Đăng nhập',
               style: TextStyle(
-                  fontSize: 25,
+                  fontSize: AppSizes.blockSizeHorizontal * 5,
                   color: ColorModel.primaryColor,
                   fontWeight: FontWeight.w700),
             ),
@@ -228,27 +230,27 @@ class _LoginPageState extends State<LoginPage> {
   Widget _buildSocialButton(String text, String iconPath) {
     return Expanded(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 4),
+        padding: EdgeInsets.symmetric(horizontal: AppSizes.blockSizeHorizontal * 1),
         child: ElevatedButton(
           onPressed: () {},
           style: ElevatedButton.styleFrom(
             backgroundColor: ColorModel.primaryColor,
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+            padding: EdgeInsets.symmetric(vertical: AppSizes.blockSizeHorizontal * 3, horizontal: AppSizes.blockSizeHorizontal * 1.5),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(AppSizes.blockSizeHorizontal * 3),
               side: BorderSide(color: ColorModel.textColor),
             ),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(iconPath, height: 24),
-              const SizedBox(width: 8),
+              Image.asset(iconPath, height: AppSizes.blockSizeHorizontal * 5),
+              SizedBox(width: AppSizes.blockSizeHorizontal * 1.5),
               Text(
                 text,
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
-                  fontSize: 16,
+                  fontSize: AppSizes.blockSizeHorizontal * 3,
                   color: ColorModel.textColor,
                 ),
               ),
@@ -265,7 +267,7 @@ class _LoginPageState extends State<LoginPage> {
       children: [
         Text(
           'Chưa có tài khoản?',
-          style: TextStyle(fontSize: 18, color: ColorModel.lightTextColor),
+          style: TextStyle(fontSize: AppSizes.blockSizeHorizontal * 4, color: ColorModel.lightTextColor),
         ),
         TextButton(
           onPressed: () {
@@ -273,7 +275,7 @@ class _LoginPageState extends State<LoginPage> {
           },
           child: Text(
             'Đăng ký',
-            style: TextStyle(fontSize: 18, color: ColorModel.secondaryColor),
+            style: TextStyle(fontSize: AppSizes.blockSizeHorizontal * 4, color: ColorModel.secondaryColor),
           ),
         )
       ],
