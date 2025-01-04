@@ -46,6 +46,11 @@ class MyApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF14161B)),
             scaffoldBackgroundColor: Color(0xFF14161B),
             useMaterial3: true,
+            pageTransitionsTheme: const PageTransitionsTheme(
+              builders: {
+                TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
+              }
+            )
             ),
           routerConfig: AppRouter.router,
           // home: (token.isNotEmpty && !JwtDecoder.isExpired(token)) ? LibraryPage(token: token) : StartPage(),

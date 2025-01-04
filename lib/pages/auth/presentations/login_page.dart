@@ -52,6 +52,7 @@ class _LoginPageState extends State<LoginPage> {
               key: 'refresh_token', value: myToken);
           await storage.write(
             key: 'userId', value: jsonResponse['id']);
+          print(jsonResponse);
           context.pushReplacement('/main');
       }else{
         print('Something went wrong');

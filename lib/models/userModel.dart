@@ -3,14 +3,14 @@ class UserModel {
   final String name;
   final String email;
   final String password;
-  final PictureModel pictures;
+  final PictureModel? pictures;
 
   UserModel({
-    required this.id,
-    required this.name,
-    required this.email,
-    required this.password,
-    required this.pictures
+    this.id  = '',
+    this.name = '',
+    this.email = '',
+    this.password = '',
+    this.pictures,
   });
 }
 
@@ -20,8 +20,8 @@ class PictureModel {
   final String thumbnail;
 
   PictureModel({
-    required this.large,
-    required this.medium,
-    required this.thumbnail,
+    this.large = '',
+    this.medium = '',
+    this.thumbnail = '',
   });
 }

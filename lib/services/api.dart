@@ -11,15 +11,19 @@ class BannerApi {
   static Future<List<AppBanner>> fetchBanners() async {
     final uri = Uri.parse('${Environment.apiUrl}/api/banner');
     final response = await http.get(uri);
-    final body = response.body;
-    final json = jsonDecode(body);
-    final result = json as List<dynamic>;
-    final banner = result.map((e) {
-      return AppBanner(
-        bannerUrl: e['bannerUrl']
-      );
-    }).toList();
-    return banner;
+    if(response.statusCode == 200){
+      final body = response.body;
+      final json = jsonDecode(body);
+      final result = json as List<dynamic>;
+      final banner = result.map((e) {
+        return AppBanner(
+          bannerUrl: e['bannerUrl']
+        );
+      }).toList();
+      return banner;
+    } else { 
+      throw Exception('Failed to load banners');
+    }
   }
 }
 
@@ -29,14 +33,18 @@ class ChapterApi {
   static Future<ChapterModel> fetchChapters(String id) async {
     final uri = Uri.parse('${Environment.apiUrl}/v1/chapters/$id');
     final response = await http.get(uri);
-    final body = response.body;
-    final json = jsonDecode(body);
-    final chapter = ChapterModel(
-        id: json['_id'] as String,
-        name: json['name'],
-        chapterUrl:  json['chapterUrl']
-      );
-    return chapter;
+    if(response.statusCode == 200){
+      final body = response.body;
+      final json = jsonDecode(body);
+      final chapter = ChapterModel(
+          id: json['_id'] as String,
+          name: json['name'],
+          chapterUrl:  json['chapterUrl']
+        );
+      return chapter;
+    } else { 
+      throw Exception('Failed to load chapters');
+    }
   }
 }
 
@@ -54,7 +62,9 @@ class BookApi {
           title: e['title'],
           coverImage:  e['coverImage'],
           author: e['author'],
-          rate: e['rate']
+          rate: e['rate'],
+          description: e['description'],
+          shortDescription: e['shortDescription']
         );
       }).toList();
       return book;
@@ -66,17 +76,23 @@ class BookApi {
   static Future<BookModel> fetchBookById(String id) async {
     final uri = Uri.parse('${Environment.apiUrl}/v1/books/$id');
     final response = await http.get(uri);
-    final body = response.body;
-    final json = jsonDecode(body);
-    final book = BookModel(
-        id: json['_id'],
-        title: json['title'],
-        coverImage: json['coverImage'],
-        chapters: json['chapters'],
-        author: json['author'],
-        rate: json['rate']
-      );
-    return book;
+    if(response.statusCode == 200){
+      final body = response.body;
+      final json = jsonDecode(body);
+      final book = BookModel(
+          id: json['_id'],
+          title: json['title'],
+          coverImage: json['coverImage'],
+          chapters: json['chapters'],
+          author: json['author'],
+          rate: json['rate'],
+          description: json['description'],
+          shortDescription: json['shortDescription']
+        );
+      return book;
+    } else { 
+      throw Exception('Failed to load books');
+    }
   }
 }
 
@@ -84,21 +100,25 @@ class BookApi {
       static Future<UserModel> fetchUserByEmail(String id) async {
         final uri = Uri.parse('${Environment.apiUrl}/v1/users/$id');
         final response = await http.get(uri);
-        final body = response.body;
-        final json = jsonDecode(body);
-        final picJson = json['picture'];
-        PictureModel pictures = PictureModel(
-            large: picJson['large'], 
-            medium: picJson['medium'], 
-            thumbnail: picJson['thumbnail']
-          );
-        final user = UserModel(
-            id: json['_id'],
-            name: json['name'],
-            email: json['email'],
-            password: json['password'],
-            pictures: pictures
-          );
-        return user;
+        if(response.statusCode == 200){
+          final body = response.body;
+          final json = jsonDecode(body);
+          final picJson = json['picture'];
+          PictureModel pictures = PictureModel(
+              large: picJson['large'], 
+              medium: picJson['medium'], 
+              thumbnail: picJson['thumbnail']
+            );
+          final user = UserModel(
+              id: json['_id'],
+              name: json['name'],
+              email: json['email'],
+              password: json['password'],
+              pictures: pictures
+            );
+          return user;
+        } else { 
+      throw Exception('Failed to load books');
+        }
       }
     }

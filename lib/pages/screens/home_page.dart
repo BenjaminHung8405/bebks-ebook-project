@@ -22,8 +22,8 @@ class _HomePageState extends State<HomePage> {
   List<AppBanner> banners = [];
   List<BookModel> books = [];
   List<BookModel> popularBooks = [];
-  BookModel book = BookModel(id: '', title: '', coverImage: '', author: '', rate: 0);
-  BookModel popularBook = BookModel(id: '', title: '', coverImage: '', author: '', rate: 0);
+  BookModel book = BookModel(id: '', title: '', coverImage: '', author: '', rate: 0, description: '', shortDescription: '');
+  BookModel popularBook = BookModel(id: '', title: '', coverImage: '', author: '', rate: 0, description: '', shortDescription: '');
   UserModel user = UserModel(id: '', name: '', email: '', password: '',pictures: PictureModel(large: '', medium: '', thumbnail: ''));
   bool _isLoading = true;
   int myCurrentIndex = 0;
@@ -99,7 +99,7 @@ class _HomePageState extends State<HomePage> {
           )],
           body: SingleChildScrollView(
             scrollDirection: Axis.vertical,
-            padding: EdgeInsets.symmetric(horizontal: AppSizes.blockSizeHorizontal * 4),
+            // padding: EdgeInsets.symmetric(horizontal: AppSizes.blockSizeHorizontal * 4),
             child: Column(
               children: [
                   SizedBox(height: AppSizes.blockSizeHorizontal * 4,),
@@ -108,140 +108,139 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(height: AppSizes.blockSizeHorizontal * 1,),
                   _recentRead(),
                   SizedBox(height: AppSizes.blockSizeHorizontal * 4,),
-                  Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: AppSizes.blockSizeHorizontal * 4),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            titleWidget(
-                              title: 'Phổ biến',
-                              padding: 0,
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                
-                              },
-                              child: Text(
-                                'See all',
-                                style: TextStyle(
-                                  color: ColorModel.buttonColor,
-                                  fontSize: AppSizes.blockSizeHorizontal * 3,
-                                  fontWeight: FontWeight.w500
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      ListView.builder(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
-                        itemCount: popularBooks.length,
-                        itemBuilder: (context, index) {
-                          popularBook = popularBooks[index];
-                          return Container(
-                            width: AppSizes.screenWidth,
-                            height: AppSizes.blockSizeHorizontal * 50,
-                            margin: EdgeInsets.symmetric(vertical: AppSizes.blockSizeHorizontal * 2),
-                            padding: EdgeInsets.all(AppSizes.blockSizeHorizontal * 2),
-                            decoration: BoxDecoration(
-                              color: ColorModel.primaryColor,
-                              borderRadius: BorderRadius.circular(AppSizes.blockSizeHorizontal * 3),
-                              boxShadow: [
-                                BoxShadow(
-                                  offset: Offset(2, 3),
-                                  color: ColorModel.lightTextColor.withOpacity(0.3),
-                                  blurRadius: 7,
-                                  spreadRadius: 0.5
-                                )
-                              ]
-                            ),
-                            child: Row(
-                              children: [
-                                Container(
-                                  height: AppSizes.blockSizeHorizontal * 45,
-                                  child: RoundedImage(
-                                    imageUrl: popularBook.coverImage,
-                                    borderRadius: AppSizes.blockSizeHorizontal * 1,
-                                    fit: BoxFit.fitHeight,
-                                  ),
-                                ),
-                                SizedBox(width: AppSizes.blockSizeHorizontal * 3,),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(height: AppSizes.blockSizeHorizontal * 2,),
-                                    Text(
-                                      popularBook.title,
-                                      style: TextStyle(
-                                        color: ColorModel.textColor,
-                                        fontSize: AppSizes.blockSizeHorizontal * 3.5,
-                                        fontWeight: FontWeight.w600
-                                      ),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    Text(
-                                      popularBook.author,
-                                      style: TextStyle(
-                                        color: ColorModel.lightTextColor,
-                                        fontSize: AppSizes.blockSizeHorizontal * 3,
-                                        fontWeight: FontWeight.w500
-                                      ),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    SizedBox(height: AppSizes.blockSizeHorizontal * 2,),
-                                    Row(
-                                      children: [
-                                        StarRating(
-                                          rating: popularBook.rate,
-                                          starCount: 5,
-                                          allowHalfRating: true,
-                                          color: Colors.yellow.shade700,
-                                          borderColor: Colors.yellow.shade700,
-                                        ),
-                                        SizedBox(width: AppSizes.blockSizeHorizontal * 1,),
-                                        Text(
-                                          '${popularBook.rate}',
-                                          style: TextStyle(
-                                            color: ColorModel.lightTextColor,
-                                            fontSize: AppSizes.blockSizeHorizontal * 3,
-                                            fontWeight: FontWeight.w500
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(height: AppSizes.blockSizeHorizontal * 1,),
-                                    Wrap(
-                                      spacing: AppSizes.blockSizeHorizontal * 1,
-                                      children: List.generate(
-                                        3, 
-                                        (int index) {
-                                          return Chip(
-                                            label: Text('data'),
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(AppSizes.blockSizeHorizontal * 4)
-                                            ),
-                                          );
-                                        }
-                                      ),
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: AppSizes.blockSizeHorizontal * 50,)
+                  _popularBox(),
+                  SizedBox(height: AppSizes.blockSizeHorizontal * 15,)
                 ],
             )
           ),
         )
       );
+  }
+
+  Column _popularBox() {
+    return Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: AppSizes.blockSizeHorizontal * 4),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          titleWidget(
+                            title: 'Phổ biến',
+                            padding: 0,
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              
+                            },
+                            child: Text(
+                              'See all',
+                              style: TextStyle(
+                                color: ColorModel.buttonColor,
+                                fontSize: AppSizes.blockSizeHorizontal * 3,
+                                fontWeight: FontWeight.w500
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      itemCount: popularBooks.length,
+                      itemBuilder: (context, index) {
+                        popularBook = popularBooks[index];
+                        return Container(
+                          width: AppSizes.screenWidth,
+                          height: AppSizes.blockSizeHorizontal * 50,
+                          margin: EdgeInsets.symmetric(vertical: AppSizes.blockSizeHorizontal * 2, horizontal: AppSizes.blockSizeHorizontal * 2),
+                          padding: EdgeInsets.all(AppSizes.blockSizeHorizontal * 2),
+                          decoration: BoxDecoration(
+                            color: ColorModel.primaryColor,
+                            borderRadius: BorderRadius.circular(AppSizes.blockSizeHorizontal * 3),
+                            boxShadow: [
+                              BoxShadow(
+                                offset: Offset(2, 3),
+                                color: ColorModel.lightTextColor.withOpacity(0.3),
+                                blurRadius: 7,
+                                spreadRadius: 0.5
+                              )
+                            ]
+                          ),
+                          child: Row(
+                            children: [
+                              Container(
+                                height: AppSizes.blockSizeHorizontal * 45,
+                                child: RoundedImage(
+                                  imageUrl: popularBook.coverImage,
+                                  borderRadius: AppSizes.blockSizeHorizontal * 1,
+                                  fit: BoxFit.fitHeight,
+                                ),
+                              ),
+                              SizedBox(width: AppSizes.blockSizeHorizontal * 3,),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(height: AppSizes.blockSizeHorizontal * 2,),
+                                  Text(
+                                    popularBook.title,
+                                    style: TextStyle(
+                                      color: ColorModel.textColor,
+                                      fontSize: AppSizes.blockSizeHorizontal * 3.5,
+                                      fontWeight: FontWeight.w600
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  Text(
+                                    popularBook.author,
+                                    style: TextStyle(
+                                      color: ColorModel.lightTextColor,
+                                      fontSize: AppSizes.blockSizeHorizontal * 3,
+                                      fontWeight: FontWeight.w500
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  SizedBox(height: AppSizes.blockSizeHorizontal * 1,),
+                                  Row(
+                                    children: [
+                                      StarRating(
+                                        rating: popularBook.rate,
+                                        starCount: 5,
+                                        allowHalfRating: true,
+                                        color: Colors.yellow.shade700,
+                                        borderColor: Colors.yellow.shade700,
+                                        size: AppSizes.blockSizeHorizontal * 4,
+                                      ),
+                                      SizedBox(width: AppSizes.blockSizeHorizontal * 1,),
+                                      Text(
+                                        '${popularBook.rate}',
+                                        style: TextStyle(
+                                          color: ColorModel.lightTextColor,
+                                          fontSize: AppSizes.blockSizeHorizontal * 3,
+                                          fontWeight: FontWeight.w500
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Text(
+                                    popularBook.shortDescription,
+                                    style: TextStyle(
+                                      color: ColorModel.lightTextColor,
+                                      fontSize: AppSizes.blockSizeHorizontal * 3,
+                                      fontWeight: FontWeight.w500
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                );
   }
 
   Column _recentRead() {
@@ -310,7 +309,7 @@ class _HomePageState extends State<HomePage> {
                                       fit: BoxFit.fitHeight,
                                     ),
                                   ),
-                                  SizedBox(height: AppSizes.blockSizeHorizontal * 2),
+                                  SizedBox(height: AppSizes.blockSizeHorizontal * 1),
                                   Align(
                                     alignment: Alignment.topLeft,
                                     child: Text(
@@ -359,19 +358,22 @@ class _HomePageState extends State<HomePage> {
                           title: 'Nổi bật',
                           padding: AppSizes.blockSizeHorizontal * 4,
                         ),
-                        TextButton(
-                          onPressed: () {
-                            
-                          },
-                          child: Text(
-                            'See all',
-                            style: TextStyle(
-                              color: ColorModel.buttonColor,
-                              fontSize: AppSizes.blockSizeHorizontal * 3,
-                              fontWeight: FontWeight.w500
+                        Padding(
+                          padding: EdgeInsets.only(right: AppSizes.blockSizeHorizontal * 4),
+                          child: TextButton(
+                            onPressed: () {
+                              
+                            },
+                            child: Text(
+                              'See all',
+                              style: TextStyle(
+                                color: ColorModel.buttonColor,
+                                fontSize: AppSizes.blockSizeHorizontal * 3,
+                                fontWeight: FontWeight.w500
+                              ),
                             ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                     SizedBox(height: AppSizes.blockSizeHorizontal * 2,),
