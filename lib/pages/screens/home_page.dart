@@ -7,6 +7,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating/flutter_rating.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:go_router/go_router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:bebks_ebooks/widgets/RoundedImage.dart';
 import 'package:bebks_ebooks/widgets/title.dart';
@@ -151,90 +152,77 @@ class _HomePageState extends State<HomePage> {
                       itemCount: popularBooks.length,
                       itemBuilder: (context, index) {
                         popularBook = popularBooks[index];
-                        return Container(
-                          width: AppSizes.screenWidth,
-                          height: AppSizes.blockSizeHorizontal * 50,
-                          margin: EdgeInsets.symmetric(vertical: AppSizes.blockSizeHorizontal * 2, horizontal: AppSizes.blockSizeHorizontal * 2),
-                          padding: EdgeInsets.all(AppSizes.blockSizeHorizontal * 2),
-                          decoration: BoxDecoration(
-                            color: ColorModel.primaryColor,
-                            borderRadius: BorderRadius.circular(AppSizes.blockSizeHorizontal * 3),
-                            boxShadow: [
-                              BoxShadow(
-                                offset: Offset(2, 3),
-                                color: ColorModel.lightTextColor.withOpacity(0.3),
-                                blurRadius: 7,
-                                spreadRadius: 0.5
-                              )
-                            ]
-                          ),
-                          child: Row(
-                            children: [
-                              Container(
-                                height: AppSizes.blockSizeHorizontal * 45,
-                                child: RoundedImage(
-                                  imageUrl: popularBook.coverImage,
-                                  borderRadius: AppSizes.blockSizeHorizontal * 1,
-                                  fit: BoxFit.fitHeight,
+                        return GestureDetector(
+                          onTap: () {
+                            context.push('/');
+                          },
+                          child: Container(
+                            width: AppSizes.screenWidth,
+                            height: AppSizes.blockSizeHorizontal * 50,
+                            margin: EdgeInsets.symmetric(vertical: AppSizes.blockSizeHorizontal * 2, horizontal: AppSizes.blockSizeHorizontal * 2),
+                            padding: EdgeInsets.all(AppSizes.blockSizeHorizontal * 2),
+                            decoration: BoxDecoration(
+                              color: ColorModel.primaryColor,
+                              borderRadius: BorderRadius.circular(AppSizes.blockSizeHorizontal * 3),
+                              boxShadow: [
+                                BoxShadow(
+                                  offset: Offset(2, 3),
+                                  color: ColorModel.lightTextColor.withOpacity(0.3),
+                                  blurRadius: 7,
+                                  spreadRadius: 0.5
+                                )
+                              ]
+                            ),
+                            child: Row(
+                              children: [
+                                Container(
+                                  height: AppSizes.blockSizeHorizontal * 45,
+                                  child: RoundedImage(
+                                    imageUrl: popularBook.coverImage,
+                                    borderRadius: AppSizes.blockSizeHorizontal * 1,
+                                    fit: BoxFit.fitHeight,
+                                  ),
                                 ),
-                              ),
-                              SizedBox(width: AppSizes.blockSizeHorizontal * 3,),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(height: AppSizes.blockSizeHorizontal * 2,),
-                                  Text(
-                                    popularBook.title,
-                                    style: TextStyle(
-                                      color: ColorModel.textColor,
-                                      fontSize: AppSizes.blockSizeHorizontal * 3.5,
-                                      fontWeight: FontWeight.w600
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  Text(
-                                    popularBook.author,
-                                    style: TextStyle(
-                                      color: ColorModel.lightTextColor,
-                                      fontSize: AppSizes.blockSizeHorizontal * 3,
-                                      fontWeight: FontWeight.w500
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  SizedBox(height: AppSizes.blockSizeHorizontal * 1,),
-                                  Row(
+                                SizedBox(width: AppSizes.blockSizeHorizontal * 3,),
+                                Container(
+                                  width: AppSizes.blockSizeHorizontal * 55,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      StarRating(
-                                        rating: popularBook.rate,
-                                        starCount: 5,
-                                        allowHalfRating: true,
-                                        color: Colors.yellow.shade700,
-                                        borderColor: Colors.yellow.shade700,
-                                        size: AppSizes.blockSizeHorizontal * 4,
-                                      ),
-                                      SizedBox(width: AppSizes.blockSizeHorizontal * 1,),
+                                      SizedBox(height: AppSizes.blockSizeHorizontal * 2,),
                                       Text(
-                                        '${popularBook.rate}',
+                                        popularBook.title,
+                                        style: TextStyle(
+                                          color: ColorModel.textColor,
+                                          fontSize: AppSizes.blockSizeHorizontal * 4,
+                                          fontWeight: FontWeight.w600
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      Text(
+                                        popularBook.author,
                                         style: TextStyle(
                                           color: ColorModel.lightTextColor,
                                           fontSize: AppSizes.blockSizeHorizontal * 3,
                                           fontWeight: FontWeight.w500
                                         ),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      SizedBox(height: AppSizes.blockSizeHorizontal * 2),
+                                      Text(
+                                        popularBook.shortDescription,
+                                        style: TextStyle(
+                                          color: ColorModel.lightTextColor,
+                                          fontSize: AppSizes.blockSizeHorizontal * 3,
+                                          fontWeight: FontWeight.w500
+                                        ),
+                                        softWrap: true,
                                       ),
                                     ],
                                   ),
-                                  Text(
-                                    popularBook.shortDescription,
-                                    style: TextStyle(
-                                      color: ColorModel.lightTextColor,
-                                      fontSize: AppSizes.blockSizeHorizontal * 3,
-                                      fontWeight: FontWeight.w500
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ],
-                              )
-                            ],
+                                )
+                              ],
+                            ),
                           ),
                         );
                       },
@@ -329,12 +317,34 @@ class _HomePageState extends State<HomePage> {
                                       book.author,
                                       style: TextStyle(
                                         color: ColorModel.lightTextColor,
-                                        fontSize: AppSizes.blockSizeHorizontal * 2.5,
+                                        fontSize: AppSizes.blockSizeHorizontal * 2.8,
                                         fontWeight: FontWeight.w500
                                       ),
                                       overflow: TextOverflow.ellipsis,
                                     ),
-                                  )
+                                  ),
+                                  SizedBox(height: AppSizes.blockSizeHorizontal * 1,),
+                                  Row(
+                                    children: [
+                                      StarRating(
+                                        rating: book.rate,
+                                        starCount: 5,
+                                        allowHalfRating: true,
+                                        color: Colors.yellow.shade700,
+                                        borderColor: Colors.yellow.shade700,
+                                        size: AppSizes.blockSizeHorizontal * 3.5,
+                                      ),
+                                      SizedBox(width: AppSizes.blockSizeHorizontal * 1,),
+                                      Text(
+                                        '${popularBook.rate}',
+                                        style: TextStyle(
+                                          color: ColorModel.lightTextColor,
+                                          fontSize: AppSizes.blockSizeHorizontal * 3,
+                                          fontWeight: FontWeight.w500
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ],
                               ),
                             ),
