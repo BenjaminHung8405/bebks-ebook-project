@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:bebks_ebooks/utils/colorModel.dart';
 import 'package:bebks_ebooks/services/api.dart';
 import 'package:bebks_ebooks/widgets/title.dart';
+import 'package:go_router/go_router.dart';
 
 class BookRead extends StatefulWidget {
   final String bookId;
@@ -41,7 +42,7 @@ class _BookReadState extends State<BookRead> {
             title: titleWidget(title: book.title, size: 25, padding: 0,),
             leading: GestureDetector(
               onTap: () async {
-                Navigator.pop(context);
+                context.pop();
               },
               child: Container(
                 margin: EdgeInsets.all(10),
@@ -66,7 +67,7 @@ class _BookReadState extends State<BookRead> {
             final chapter = chapters[index];
             return GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, '/chapter/${chapter.id}');
+                context.push('/chapter/${chapter.id}');
               },
               child: Container(
                 alignment: Alignment.centerLeft,
