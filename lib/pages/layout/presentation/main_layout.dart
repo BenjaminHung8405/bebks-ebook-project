@@ -2,7 +2,6 @@ import 'package:bebks_ebooks/config/app_size.dart';
 import 'package:bebks_ebooks/pages/screens/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:iconly/iconly.dart';
 
 import '../widget/custom_navbar.dart';
 
