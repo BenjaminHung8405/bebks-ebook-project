@@ -1,6 +1,7 @@
 import 'package:bebks_ebooks/config/app_size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';  
 import 'config/routers.dart';
@@ -21,7 +22,11 @@ Future main() async {
   final token = prefs.getString('token');
   bool isTokenValid = token != null && token.isNotEmpty && !JwtDecoder.isExpired(token);
 
-  runApp(MyApp(token: isTokenValid ? token : '',));
+  runApp(
+    ProviderScope(
+      child: MyApp(token: isTokenValid ? token : '',)
+    )
+  );
 }
 
 class MyApp extends StatelessWidget {
